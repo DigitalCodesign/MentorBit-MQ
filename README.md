@@ -52,10 +52,3 @@ sensorMQ2.cambiarDeteccionGas(NUEVO_GAS_DETECCION);
 
 - `PIN_SENSOR`: Define el pin donde se conecta el sensor.
 - `GAS_DETECCION`: Especifica el gas que el sensor debe detectar, con valores correspondientes a gases como metano, CO2, monóxido de carbono, entre otros.
-
-### Resumen de Métodos
-
-- `MentorBitMQ2(uint8_t mq_pin, uint8_t gas_detection)`: Constructor para crear el objeto del sensor MQ2.
-- `obtenerLecturaMQ()`: Obtiene el valor de la concentración del gas en ppm.
-- `calibrar()`: Calibra el sensor para obtener lecturas precisas.
-- `cambiarDeteccionGas(uint8_t gas_detection)`: Cambia el tipo de gas a detectar en el sensor.
