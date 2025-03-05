@@ -1,186 +1,71 @@
-# MentorBit-SensoresMQ
-Esta librería está construida por Digital Codesign para utilizar los módulos de sensores MQ, principalmente diseñados para el kit educacional "MentorBit".
+# MentorBitMQ
 
-Puedes encontrar nuestro MentorBit y mucho más material de electrónica y robótica en nuestra tienda oficial: [https://digitalcodesign.com/shop](https://digitalcodesign.com/shop)
+Librería para el uso de sensores de gas MQ con módulos compatibles con MentorBit.
 
-# Modo de empleo
+## Descripción
 
-Una vez tengamos la librería instalada desde el Arduino IDE, tenemos que incluir la librería con la siguiente línea:
+La librería `MentorBitMQ` facilita la lectura y el uso de sensores de gas MQ en módulos compatibles con MentorBit. Proporciona clases para diferentes modelos de sensores MQ (MQ2, MQ3, MQ4, MQ5, MQ6, MQ7, MQ8, MQ9 y MQ135), permitiendo medir la concentración de diversos gases como monóxido de carbono (CO), dióxido de carbono (CO2), metano (CH4), gas licuado de petróleo (GLP), hidrógeno (H2), humo, alcohol, tolueno, amoníaco (NH4), acetona y benceno.
 
-```cpp
-#include <MentorBitMQ.h>
-```
+**Nota:** Esta librería depende de la librería `MQUnifiedsensor`. Asegúrate de que también esté instalada.
 
-### Constructor
+## Clases y Métodos
 
-Una vez incluida la librería, usamos el constructor para crear el objeto de cada sensor MQ y definimos el pin al que está conectado el sensor y el tipo de gas a detectar:
+La librería incluye las siguientes clases, cada una para un modelo de sensor MQ:
 
-```cpp
-MentorBitMQ3 sensorMQ3(PIN_SENSOR, TIPO_GAS);
-MentorBitMQ4 sensorMQ4(PIN_SENSOR, TIPO_GAS);
-MentorBitMQ5 sensorMQ5(PIN_SENSOR, TIPO_GAS);
-MentorBitMQ6 sensorMQ6(PIN_SENSOR, TIPO_GAS);
-MentorBitMQ7 sensorMQ7(PIN_SENSOR, TIPO_GAS);
-MentorBitMQ8 sensorMQ8(PIN_SENSOR, TIPO_GAS);
-MentorBitMQ9 sensorMQ9(PIN_SENSOR, TIPO_GAS);
-MentorBitMQ135 sensorMQ135(PIN_SENSOR, TIPO_GAS);
-```
+* `MentorBitMQ2`
+* `MentorBitMQ3`
+* `MentorBitMQ4`
+* `MentorBitMQ5`
+* `MentorBitMQ6`
+* `MentorBitMQ7`
+* `MentorBitMQ8`
+* `MentorBitMQ9`
+* `MentorBitMQ135`
 
-Siendo `PIN_SENSOR` el pin al que está conectado el sensor y `TIPO_GAS` el gas que se desea medir (0-4, dependiendo del tipo de gas como alcohol, metano, CO, etc.).
+Cada clase tiene los siguientes métodos públicos:
 
-### Uso
+* `MentorBitMQX(uint8_t mq_pin, uint8_t gas_detection)`: Constructor de la clase.
+    * `mq_pin`: Pin analógico al que está conectado el sensor.
+    * `gas_detection`: Constante que indica el gas que se quiere detectar con mayor precisión.
+* `float obtenerLecturaMQ()`: Obtiene la lectura del sensor en ppm.
+* `void cambiarDeteccionGas(uint8_t gas_detection)`: Cambia el gas que se quiere detectar.
+* `void calibrar()`: Calibra el sensor.
 
-Con el objeto del sensor definido, podemos obtener la lectura del sensor utilizando la función `obtenerLecturaMQ()`, que devuelve el valor de la medición en ppm:
+## Constantes
 
-```cpp
-float lectura = sensorMQ3.obtenerLecturaMQ();
-```
+Cada clase define constantes para los diferentes gases que puede detectar el sensor. Por ejemplo, la clase `MentorBitMQ2` define las siguientes constantes:
 
-El valor devuelto es el valor en partes por millón (ppm) correspondiente al gas detectado.
+* `h2`: Hidrógeno
+* `glp`: Gas licuado de petróleo
+* `co`: Monóxido de carbono
+* `alcohol`: Alcohol
+* `propano`: Propano
 
-### Calibración
+## Modo de Empleo
 
-Es recomendable calibrar el sensor antes de leer los valores. Se utiliza la función `calibrar()` para realizar la calibración del sensor:
+1.  **Instalación:**
+    * Abre el IDE compatible con MentorBit.
+    * Ve a "Herramientas" -> "Gestionar librerías..."
+    * Busca "MentorBitMQ" e instálala.
+    * **Nota:** Asegúrate de que la librería `MQUnifiedsensor` esté instalada.
 
-```cpp
-sensorMQ3.calibrar();
-```
+2.  **Ejemplo básico (MQ2):**
 
-### Cambio de Gas a Detectar
+    ```c++
+    #include <MentorBitMQ.h>
 
-Puedes cambiar el tipo de gas que el sensor detecta utilizando la función `cambiarDeteccionGas()`. Solo necesitas indicar el nuevo tipo de gas como parámetro:
+    MentorBitMQ2 mq2(A0, MentorBitMQ2::h2); // Sensor MQ2 en pin A0, detectando H2
 
-```cpp
-sensorMQ3.cambiarDeteccionGas(MentorBitMQ3.co);
-```
+    void setup() {
+      Serial.begin(9600);
+      mq2.calibrar(); // Calibra el sensor
+    }
 
-# Atributos
-
-Los sensores MQ de MentorBit cuentan con diferentes atributos para detectar diversos gases. Estos son los atributos que puedes encontrar en cada clase de sensor.
-
-### Atributos Comunes para Todos los Sensores MQ
-
-#### `uint8_t mq_pin`
-- **Descripción**: Pin del microcontrolador al que está conectado el sensor MQ.
-
-#### `uint8_t gas_detection`
-- **Descripción**: Gas que se desea detectar/medir con mayor precisión.
-
-### Atributos Específicos por Sensor
-
-Cada sensor tiene diferentes gases que puede detectar. Los atributos son constantes que definen el tipo de gas a detectar y ajustan el sensor para obtener mejores lecturas:
-
-#### Sensor MQ135
-
-- `MentorBitMQ135.co`: Dióxido de carbono (CO)
-- `MentorBitMQ135.alcohol`: Alcohol (Etanol)
-- `MentorBitMQ135.co2`: Dióxido de carbono (CO2)
-- `MentorBitMQ135.tolueno`: Tolueno
-- `MentorBitMQ135.nh4`: Amoníaco (NH4)
-- `MentorBitMQ135.acetona`: Acetona
-
-#### Sensor MQ2
-
-- `MentorBitMQ2.h2`: Hidrógeno (H2)
-- `MentorBitMQ2.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ2.co`: Monóxido de carbono (CO)
-- `MentorBitMQ2.alcohol`: Alcohol (Etanol)
-- `MentorBitMQ2.propano`: Propano
-
-#### Sensor MQ3
-
-- `MentorBitMQ3.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ3.ch4`: Metano (CH4)
-- `MentorBitMQ3.co`: Monóxido de carbono (CO)
-- `MentorBitMQ3.alcohol`: Alcohol (Etanol)
-- `MentorBitMQ3.benceno`: Benceno
-- `MentorBitMQ3.hexano`: Hexano
-
-#### Sensor MQ4
-
-- `MentorBitMQ4.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ4.ch4`: Metano (CH4)
-- `MentorBitMQ4.co`: Monóxido de carbono (CO)
-- `MentorBitMQ4.alcohol`: Alcohol (Etanol)
-- `MentorBitMQ4.humo`: Humo
-
-#### Sensor MQ5
-
-- `MentorBitMQ5.h2`: Hidrógeno (H2)
-- `MentorBitMQ5.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ5.ch4`: Metano (CH4)
-- `MentorBitMQ5.co`: Monóxido de carbono (CO)
-- `MentorBitMQ5.alcohol`: Alcohol (Etanol)
-
-#### Sensor MQ6
-
-- `MentorBitMQ6.h2`: Hidrógeno (H2)
-- `MentorBitMQ6.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ6.ch4`: Metano (CH4)
-- `MentorBitMQ6.co`: Monóxido de carbono (CO)
-- `MentorBitMQ6.alcohol`: Alcohol (Etanol)
-
-#### Sensor MQ7
-
-- `MentorBitMQ7.h2`: Hidrógeno (H2)
-- `MentorBitMQ7.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ7.ch4`: Metano (CH4)
-- `MentorBitMQ7.co`: Monóxido de carbono (CO)
-- `MentorBitMQ7.alcohol`: Alcohol (Etanol)
-
-#### Sensor MQ8
-
-- `MentorBitMQ8.h2`: Hidrógeno (H2)
-- `MentorBitMQ8.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ8.ch4`: Metano (CH4)
-- `MentorBitMQ8.co`: Monóxido de carbono (CO)
-- `MentorBitMQ8.alcohol`: Alcohol (Etanol)
-
-#### Sensor MQ9
-
-- `MentorBitMQ9.glp`: Gas Licuado de Petróleo (GLP)
-- `MentorBitMQ9.ch4`: Metano (CH4)
-- `MentorBitMQ9.co`: Monóxido de carbono (CO)
-
-Cada sensor se calibra para detectar los diferentes gases de forma precisa. Los atributos de cada tipo de gas se pueden modificar y ajustar usando las funciones `calibrar()` y `cambiarDeteccionGas()`.
-
-# Métodos principales
-
-### `MentorBitMQx` -> Constructor
-El constructor inicializa el sensor MQ y el tipo de gas que se desea detectar.
-
-```cpp
-MentorBitMQ3 sensorMQ3(PIN_SENSOR, MentorBitMQ3.co);
-```
-- **Parámetros**:
-  - `PIN_SENSOR`: El pin al que se conecta el sensor.
-  - `MentorBitMQ3.co`: El gas que se va a detectar (en este caso, CO).
-
-### `obtenerLecturaMQ` -> Devuelve la lectura obtenida del sensor MQ.
-Devuelve un valor flotante que representa la concentración del gas detectado en partes por millón (ppm).
-
-```cpp
-float lectura = sensorMQ3.obtenerLecturaMQ();
-```
-
-- **Valor devuelto**: Un valor flotante que representa la concentración del gas detectado en ppm.
-
-### `cambiarDeteccionGas` -> Permite al usuario ajustar el valor de ppm devuelto en función del gas a detectar.
-Recibe como parámetro un valor que representa el tipo de gas a detectar (por ejemplo, `MentorBitMQ3.co`).
-
-```cpp
-sensorMQ3.cambiarDeteccionGas(MentorBitMQ3.co);
-```
-
-- **Parámetros**: 
-  - `MentorBitMQ3.co`: El gas que se desea detectar (por ejemplo, `MentorBitMQ3.co`, `MentorBitMQ3.alcohol`, etc.).
-
-### `calibrar` -> Calibra el sensor para su posterior uso.
-Calibra el sensor para asegurar mediciones precisas.
-
-```cpp
-sensorMQ3.calibrar();
-```
-
-### `setParameters` -> Ajusta los parámetros para el cálculo de los ppm (interna).
-Este método se utiliza internamente para ajustar los parámetros del sensor según el tipo de gas seleccionado.
+    void loop() {
+      float ppm = mq2.obtenerLecturaMQ();
+      Serial.print("Concentración de H2: ");
+      Serial.print(ppm);
+      Serial.println(" ppm");
+      delay(1000);
+    }
+    ```
