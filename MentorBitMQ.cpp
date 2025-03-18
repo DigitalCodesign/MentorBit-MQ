@@ -66,8 +66,8 @@
       - Pin del microcontrolador al que esta conectado el sensor MQ135
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ135::MentorBitMQ135(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ135::MentorBitMQ135(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    //MQ.update();
@@ -144,6 +144,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ135::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ2  ************************************/
 
 /*
@@ -152,8 +165,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ2
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ2::MentorBitMQ2(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ2::MentorBitMQ2(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -223,6 +236,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ2::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ3  ************************************/
 
 /*
@@ -231,8 +257,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ3
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ3::MentorBitMQ3(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ3::MentorBitMQ3(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -306,6 +332,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ3::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ4  ************************************/
 
 /*
@@ -314,8 +353,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ4
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ4::MentorBitMQ4(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ4::MentorBitMQ4(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -385,6 +424,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ4::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ5  ************************************/
 
 /*
@@ -393,8 +445,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ5
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ5::MentorBitMQ5(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ5::MentorBitMQ5(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -464,6 +516,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ5::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ6  ************************************/
 
 /*
@@ -472,8 +537,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ6
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ6::MentorBitMQ6(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ6::MentorBitMQ6(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -543,6 +608,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ6::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ7  ************************************/
 
 /*
@@ -551,8 +629,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ7
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ7::MentorBitMQ7(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ7::MentorBitMQ7(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -622,6 +700,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ7::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ8  ************************************/
 
 /*
@@ -630,8 +721,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ8
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ8::MentorBitMQ8(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ8::MentorBitMQ8(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -701,6 +792,19 @@ switch(gas_detection){
    }
 }
 
+void MentorBitMQ8::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
+}
+
 /************************************  Sensor MQ9  ************************************/
 
 /*
@@ -709,8 +813,8 @@ switch(gas_detection){
       - Pin del microcontrolador al que esta conectado el sensor MQ9
       - Gas que se desea detectar/medir con mayor precision
 */
-MentorBitMQ9::MentorBitMQ9(uint8_t mq_pin, uint8_t gas_detection): MQ("nc", 5, 10, mq_pin, "nc"){
-   _mq_pin = mq_pin;
+MentorBitMQ9::MentorBitMQ9(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 5, 10, mq_pin, "nc"){
+   _port.gpios[0] = mq_pin;
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
@@ -771,4 +875,17 @@ switch(gas_detection){
       MQ.setB(-2.244);
       break;
    }
+}
+
+void MentorBitMQ9::configPort(const Port& port) {
+
+   _port.type = port.type;
+   _port.location = port.location;
+   _port.gpios[0] = port.gpios[0];
+   _port.gpios[1] = port.gpios[1];
+
+   MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
+   temp_mq.setRegressionMethod(1);
+   MQ = temp_mq;
+
 }

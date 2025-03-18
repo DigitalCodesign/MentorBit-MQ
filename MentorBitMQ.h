@@ -60,19 +60,21 @@
 #define MentorBitMQ_h
 
 #include <arduino.h>
+#include <MentorPort.h>
 #include <MQUnifiedsensor.h>
 
 /***********************************  Sensor MQ135  ***********************************/
 
-class MentorBitMQ135
+class MentorBitMQ135 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ135(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ135(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t co = 0;
         const uint8_t alcohol = 1;
@@ -85,7 +87,7 @@ class MentorBitMQ135
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -94,15 +96,16 @@ class MentorBitMQ135
 
 /************************************  Sensor MQ2  ************************************/
 
-class MentorBitMQ2
+class MentorBitMQ2 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ2(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ2(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t h2 = 0;
         const uint8_t glp = 1;
@@ -114,7 +117,7 @@ class MentorBitMQ2
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -123,15 +126,16 @@ class MentorBitMQ2
 
 /************************************  Sensor MQ3  ************************************/
 
-class MentorBitMQ3
+class MentorBitMQ3 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ3(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ3(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t glp = 0;
         const uint8_t ch4 = 1;
@@ -144,7 +148,7 @@ class MentorBitMQ3
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -153,15 +157,16 @@ class MentorBitMQ3
 
 /************************************  Sensor MQ4  ************************************/
 
-class MentorBitMQ4
+class MentorBitMQ4 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ4(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ4(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t glp = 0;
         const uint8_t ch4 = 1;
@@ -173,7 +178,7 @@ class MentorBitMQ4
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -182,15 +187,16 @@ class MentorBitMQ4
 
 /************************************  Sensor MQ5  ************************************/
 
-class MentorBitMQ5
+class MentorBitMQ5 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ5(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ5(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t h2 = 0;
         const uint8_t glp = 1;
@@ -202,7 +208,7 @@ class MentorBitMQ5
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -211,15 +217,16 @@ class MentorBitMQ5
 
 /************************************  Sensor MQ6  ************************************/
 
-class MentorBitMQ6
+class MentorBitMQ6 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ6(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ6(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t h2 = 0;
         const uint8_t glp = 1;
@@ -231,7 +238,7 @@ class MentorBitMQ6
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -240,15 +247,16 @@ class MentorBitMQ6
 
 /************************************  Sensor MQ7  ************************************/
 
-class MentorBitMQ7
+class MentorBitMQ7 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ7(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ7(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t h2 = 0;
         const uint8_t glp = 1;
@@ -260,7 +268,7 @@ class MentorBitMQ7
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -269,15 +277,16 @@ class MentorBitMQ7
 
 /************************************  Sensor MQ8  ************************************/
 
-class MentorBitMQ8
+class MentorBitMQ8 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ8(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ8(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t h2 = 0;
         const uint8_t glp = 1;
@@ -289,7 +298,7 @@ class MentorBitMQ8
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
@@ -298,15 +307,16 @@ class MentorBitMQ8
 
 /************************************  Sensor MQ9  ************************************/
 
-class MentorBitMQ9
+class MentorBitMQ9 : public MentorPort
 {
 
     public:
 
-        MentorBitMQ9(uint8_t mq_pin, uint8_t gas_detection);
+        MentorBitMQ9(uint8_t gas_detection, uint8_t mq_pin = 0);
         float obtenerLecturaMQ();
         void cambiarDeteccionGas(uint8_t gas_detection);
         void calibrar();
+        void configPort(const Port& port) override;
 
         const uint8_t glp = 0;
         const uint8_t ch4 = 1;
@@ -316,7 +326,7 @@ class MentorBitMQ9
 
         void setParameters(uint8_t gas_detection);
 
-        uint8_t _mq_pin;
+        Port _port;
         uint8_t _gas_detection;
 
         MQUnifiedsensor MQ;
