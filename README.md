@@ -103,13 +103,13 @@ void loop() {
 ## Funciones Principales
 
 - `float obtenerLecturaMQ();`  
-  Devuelve `true` si se ha detectado presencia de gas, `false` si no.
+  Devuelve el valor en ppm medido por el sensor en el ambiente para el gas indicado.
 
 - `void cambiarDeteccionGas(uint8_t gas_detection);`  
-  Devuelve el valor analogico medido por el sensor.
+  Cambia los parametros del sensor para medir la concentración de otro tipo de gas.
 
 - `void calibrar();`  
-  Devuelve el valor analogico medido por el sensor.
+  Calibra el sensor para obtener una medida más precisa.
 
 ---
 
