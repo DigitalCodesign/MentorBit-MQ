@@ -47,7 +47,7 @@ A continuación se pueden ver todos los módulos MentorBit MQ junto con los gase
 ||||
 |:-----:|:------:|:-----:|
 |MQ-135|MQ-2|MQ-3|
-|<img src="" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ2.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ3.png" width="300"/>|
+|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ135.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ2.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ3.png" width="300"/>|
 |<b>- Amoniaco</b><br>- Alcohol<br>- Benceno<br>- Humo<br>- CO2|<b> - GLP</b> <br>-  H2<br> - Alcohol<br> - CO<br> - Propano |- GLP<br> -CH4<br> -CO<br><b> - Alcohol</b><br>- Benceno<br>- Hexano|
 |MQ-4|MQ-5|MQ-6|
 |<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ4.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ5.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ6.png" width="300"/>|
