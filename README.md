@@ -36,9 +36,6 @@ Así puedes centrarte en el desarrollo de tu idea sin preocuparte por el tratami
 
 ---
 
-
----
-
 ## Modelos compatibles
 
 A continuación se pueden ver todos los módulos MentorBit MQ junto con los gases a los que son sensibles.
