@@ -6,7 +6,7 @@ Si estás empezando en el mundo de la electrónica, ¡no te preocupes! MentorBit
 
 ![Render del Módulo MentorBit Sensor de Gases MQ.](https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ135.png)
 
-Con esta librería, podrás saber cuándo empieza a llover y crear reacciones automáticas ante la presencia de gas en tus proyectos.
+Con esta librería, podrás saber la presencia de un determinado gas y su concentración aproximada en tus proyectos.
 
 ---
 
