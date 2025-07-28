@@ -4,7 +4,7 @@ Esta librería está diseñada para detectar la presencia de un gas, el cual cam
 
 Si estás empezando en el mundo de la electrónica, ¡no te preocupes! MentorBit está pensado para que aprender sea fácil y divertido. Esta placa ya incluye un montón de componentes (LEDs, pulsadores, pantallas, etc.) y utiliza conectores especiales (JST) para que puedas añadir nuevos sensores y módulos sin tener que pelearte con un montón de cables. Pásate por nuestra web para saber más de MentorBit y nuestros productos [pinchando aquí](https://digitalcodesign.com/).
 
-![Render del Módulo MentorBit Sensor de Gases MQ.](https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ135.png)
+![Render del Módulo MentorBit Sensor de Gases MQ.](https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ135.png)
 
 Con esta librería, podrás saber cuándo empieza a llover y crear reacciones automáticas ante la presencia de gas en tus proyectos.
 
@@ -47,13 +47,13 @@ A continuación se pueden ver todos los módulos MentorBit MQ junto con los gase
 ||||
 |:-----:|:------:|:-----:|
 |MQ-135|MQ-2|MQ-3|
-|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ135.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ2.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ3.png" width="300"/>|
+|<img src="" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ2.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ3.png" width="300"/>|
 |<b>- Amoniaco</b><br>- Alcohol<br>- Benceno<br>- Humo<br>- CO2|<b> - GLP</b> <br>-  H2<br> - Alcohol<br> - CO<br> - Propano |- GLP<br> -CH4<br> -CO<br><b> - Alcohol</b><br>- Benceno<br>- Hexano|
 |MQ-4|MQ-5|MQ-6|
-|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ4.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ5.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ6.png" width="300"/>|
+|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ4.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ5.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ6.png" width="300"/>|
 |-GLP<br><b>- CH4</b><br> - CO<br> - Alcohol<br> - Humo|- H2<br><b> - GLP</b><br> - CH4<br> - CO<br> - Alcohol| - H2<br><b> - GLP<br> - CH4</b><br> - CO<br> - Alcohol|
 |MQ-7|MQ-8|MQ-9|
-|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ7.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ8.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/MQ9.png" width="300"/>|
+|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ7.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ8.png" width="300"/>|<img src="https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/MQ9.png" width="300"/>|
 |-H2<br>- GLP<br> - CH4<br><b> - CO</b><br> - ALcohol|<b>- H2</b><br> - GLP<br> - CH4<br> - CO<br> - Alcohol|- <b>GLP<br> - CH4<br> - CO</b>|
 
 
@@ -69,7 +69,7 @@ Conecta el módulo sensor de gases MQ a uno de los puertos analógico-digital co
 - Ve al menú *Programa -> Incluir Librería -> Administrar Librerías...*
 - En el buscador, escribe ***MentorBit-SensorMQ*** y haz clic en "Instalar".
 
-![Ejemplo de búsqueda en el gestor de librerías del IDE de Arduino.](https://github.com/DigitalCodesign/MentorBit-SensorMQ/blob/main/assets/library_instalation_example.png)
+![Ejemplo de búsqueda en el gestor de librerías del IDE de Arduino.](https://github.com/DigitalCodesign/MentorBit-MQ/blob/main/assets/library_instalation_example.png)
 
 ---
 
