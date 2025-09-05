@@ -17,9 +17,9 @@
 
 
    Autor: Digital Codesign
-   Version: 1.0.0
+   Version: 1.1.0
    Fecha de creación: Septiembre de 2024
-   Fecha de version: Septiembre de 2024
+   Fecha de version: Septiembre de 2025
    Repositorio: https://github.com/DigitalCodesign/MentorBit-MQ
    Descripcion:
       Esta libreria esta especificamente diseñada para ser utilizada junto con
@@ -73,7 +73,8 @@ MentorBitMQ135::MentorBitMQ135(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("n
    //MQ.update();
    
    setParameters(_gas_detection);
-   
+
+   MQ.init();
    
 }
 
@@ -97,6 +98,7 @@ void MentorBitMQ135::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(3.6);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -146,14 +148,20 @@ switch(gas_detection){
 
 void MentorBitMQ135::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -170,6 +178,8 @@ MentorBitMQ2::MentorBitMQ2(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+
+   MQ.init();
 }
 
 /*
@@ -193,6 +203,7 @@ void MentorBitMQ2::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(9.83);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -238,14 +249,20 @@ switch(gas_detection){
 
 void MentorBitMQ2::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -262,6 +279,8 @@ MentorBitMQ3::MentorBitMQ3(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+   MQ.init();
+
 }
 
 /*
@@ -285,6 +304,7 @@ void MentorBitMQ3::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(60);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -310,7 +330,7 @@ switch(gas_detection){
       MQ.setB(-3.245);
       break;
    case 1:
-      MQ.setA(2*10000000000000000000000000000000);
+      MQ.setA(2.0*e14);
       MQ.setB(19.01);
       break;
    case 2:
@@ -334,14 +354,20 @@ switch(gas_detection){
 
 void MentorBitMQ3::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -358,6 +384,8 @@ MentorBitMQ4::MentorBitMQ4(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+   MQ.init();
+
 }
 
 /*
@@ -381,6 +409,7 @@ void MentorBitMQ4::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(4.4);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -410,15 +439,15 @@ switch(gas_detection){
       MQ.setB(-2.786);
       break;
    case 2:
-      MQ.setA(200000000000000);
+      MQ.setA(2.0e14);
       MQ.setB(-19.05);
       break;
    case 3:
-      MQ.setA(60000000000);
+      MQ.setA(6.0e10);
       MQ.setB(-14.01);
       break;
    case 4:
-      MQ.setA(30000000);
+      MQ.setA(3.0e7);
       MQ.setB(-8.308);
       break;
    }
@@ -426,14 +455,20 @@ switch(gas_detection){
 
 void MentorBitMQ4::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -450,6 +485,8 @@ MentorBitMQ5::MentorBitMQ5(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+   MQ.init();
+
 }
 
 /*
@@ -473,6 +510,7 @@ void MentorBitMQ5::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(6.5);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -518,14 +556,20 @@ switch(gas_detection){
 
 void MentorBitMQ5::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -542,6 +586,8 @@ MentorBitMQ6::MentorBitMQ6(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+   MQ.init();
+
 }
 
 /*
@@ -565,6 +611,7 @@ void MentorBitMQ6::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(10);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -598,11 +645,11 @@ switch(gas_detection){
       MQ.setB(-2.526);
       break;
    case 3:
-      MQ.setA(1000000000000000);
+      MQ.setA(1.0e15);
       MQ.setB(-13.5);
       break;
    case 4:
-      MQ.setA(50000000);
+      MQ.setA(5.0e7);
       MQ.setB(-6.017);
       break;
    }
@@ -610,14 +657,20 @@ switch(gas_detection){
 
 void MentorBitMQ6::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -634,6 +687,8 @@ MentorBitMQ7::MentorBitMQ7(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+   MQ.init();
+
 }
 
 /*
@@ -657,6 +712,7 @@ void MentorBitMQ7::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(27.5);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -682,11 +738,11 @@ switch(gas_detection){
       MQ.setB(-1.374);
       break;
    case 1:
-      MQ.setA(700000000);
+      MQ.setA(7.0e8);
       MQ.setB(-7.703);
       break;
    case 2:
-      MQ.setA(60000000000000);
+      MQ.setA(6.0e13);
       MQ.setB(-10.54);
       break;
    case 3:
@@ -694,7 +750,7 @@ switch(gas_detection){
       MQ.setB(-1.518);
       break;
    case 4:
-      MQ.setA(40000000000000000);
+      MQ.setA(4.0e16);
       MQ.setB(-12.35);
       break;
    }
@@ -702,14 +758,20 @@ switch(gas_detection){
 
 void MentorBitMQ7::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -726,6 +788,8 @@ MentorBitMQ8::MentorBitMQ8(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+   MQ.init();
+
 }
 
 /*
@@ -749,6 +813,7 @@ void MentorBitMQ8::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(70);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -774,15 +839,15 @@ switch(gas_detection){
       MQ.setB(-0.688);
       break;
    case 1:
-      MQ.setA(10000000);
+      MQ.setA(1.0e7);
       MQ.setB(-3.123);
       break;
    case 2:
-      MQ.setA(80000000000000);
+      MQ.setA(8.0e13);
       MQ.setB(-6.666);
       break;
    case 3:
-      MQ.setA(2000000000000000000);
+      MQ.setA(2.0e18);
       MQ.setB(-8.074);
       break;
    case 4:
@@ -794,14 +859,20 @@ switch(gas_detection){
 
 void MentorBitMQ8::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
 
@@ -818,6 +889,8 @@ MentorBitMQ9::MentorBitMQ9(uint8_t gas_detection, uint8_t mq_pin = 0): MQ("nc", 
    _gas_detection = gas_detection;
    MQ.setRegressionMethod(1);
    setParameters(_gas_detection);
+   MQ.init();
+
 }
 
 /*
@@ -842,6 +915,7 @@ void MentorBitMQ9::calibrar(){
    {
     MQ.update(); // Update data, the arduino will read the voltage from the analog pin
     calcR0 += MQ.calibrate(9.6);
+    delay(200);
    }
    MQ.setR0(calcR0/10);
 }
@@ -879,13 +953,19 @@ switch(gas_detection){
 
 void MentorBitMQ9::configPort(const Port& port) {
 
+   float R0_backup = MQ.getR0();
+
    _port.type = port.type;
    _port.location = port.location;
    _port.gpios[0] = port.gpios[0];
    _port.gpios[1] = port.gpios[1];
 
    MQUnifiedsensor temp_mq("nc", 5, 10, _port.gpios[0], "nc");
-   temp_mq.setRegressionMethod(1);
    MQ = temp_mq;
+   
+   MQ.setRegressionMethod(1);
+   setParameters(_gas_detection);
+   MQ.init(); // <- Llama a init() en el nuevo objeto.
+   MQ.setR0(R0_backup);
 
 }
