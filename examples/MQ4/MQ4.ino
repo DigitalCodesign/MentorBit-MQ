@@ -17,9 +17,9 @@
 
 
    Autor: Digital Codesign
-   Version: 1.0.0
+   Version: 1.1.0
    Fecha de creación: Septiembre de 2024
-   Fecha de version: Septiembre de 2024
+   Fecha de version: Septiembre de 2025
    Repositorio: https://github.com/DigitalCodesign/MentorBit-MQ
    Descripcion:
       Este sketch es un ejemplo de como medir el valor de GLP en ppm usando un
@@ -48,7 +48,7 @@
     
 
 */
-MentorBitMQ4 mq4(MQ_PIN, mq4.glp);
+MentorBitMQ4 mq4(mq4.glp, MQ_PIN);
 
 
 void setup(){
