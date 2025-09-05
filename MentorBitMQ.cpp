@@ -330,7 +330,7 @@ switch(gas_detection){
       MQ.setB(-3.245);
       break;
    case 1:
-      MQ.setA(2.0*e14);
+      MQ.setA(2.0e14);
       MQ.setB(19.01);
       break;
    case 2:
