@@ -16,81 +16,84 @@
    ╚═════╝    ╚═════╝    ╚═════╝    ╚══════╝   ╚══════╝   ╚═╝    ╚═════╝    ╚═╝  ╚═══╝
 
 
-   Autor: Digital Codesign
-   Version: 1.0.0
-   Fecha de creación: Septiembre de 2024
-   Fecha de version: Septiembre de 2024
-   Repositorio: https://github.com/DigitalCodesign/MentorBit-MQ
-   Descripcion:
-      Esta libreria esta especificamente diseñada para ser utilizada junto con
-      el modulo de sensor MQ de MentorBit
-   clases:
-      MentorBitMQ135 -> Clase para utilizar el sensor MQ135
-      MentorBitMQ2 -> Clase para utilizar el sensor MQ2
-      MentorBitMQ3 -> Clase para utilizar el sensor MQ3
-      MentorBitMQ4 -> Clase para utilizar el sensor MQ4
-      MentorBitMQ5 -> Clase para utilizar el sensor MQ5
-      MentorBitMQ6 -> Clase para utilizar el sensor MQ6
-      MentorBitMQ7 -> Clase para utilizar el sensor MQ7
-      MentorBitMQ8 -> Clase para utilizar el sensor MQ8
-      MentorBitMQ9 -> Clase para utilizar el sensor MQ9
-   Metodos principales:
-      MentorBitMQx -> Constructor
-      obtenerLectura -> devuelve la lectura obtenida del sensor MQ
-      cambiarDeteccionGas -> permite al usuario ajustar el valor de ppm devuelto en
-                              en funcion del gas a detectar
-      calibrar -> Calibra el sensor para su posterior uso
-      setParameters -> Ajusta los parametros para el calculo de los ppm (interna)
-   Atributos:
-      h2 -> asigna los parametros necesarios para una mejor deteccion del h2
-      glp -> asigna los parametros necesarios para una mejor deteccion del glp
-      ch4 -> asigna los parametros necesarios para una mejor deteccion del ch4
-      co -> asigna los parametros necesarios para una mejor deteccion del co
-      co2 -> asigna los parametros necesarios para una mejor deteccion del co2
-      tolueno -> asigna los parametros necesarios para una mejor deteccion del tolueno
-      alcohol -> asigna los parametros necesarios para una mejor deteccion del alcohol
-      humo -> asigna los parametros necesarios para una mejor deteccion del humo
-      hexano -> asigna los parametros necesarios para una mejor deteccion del hexano
-      benceno -> asigna los parametros necesarios para una mejor deteccion del benceno
-      propano -> asigna los parametros necesarios para una mejor deteccion del propano
-      acetona -> asigna los parametros necesarios para una mejor deteccion del acetona
+   @author Digital Codesign
+   @version 1.1.0
+   @date Fecha de creación: Septiembre de 2024
+   @date Fecha de versión: Mayo de 2026
+   @see Repositorio: https://github.com/DigitalCodesign/MentorBit-MQ
+   * @brief Descripción:
+      Esta librería está específicamente diseñada para ser utilizada junto con
+      la familia de módulos de sensor de gas MQ de MentorBit. Ha sido optimizada 
+      utilizando herencia orientada a objetos ("Bare Metal") para eliminar dependencias 
+      de terceros, reduciendo drásticamente el consumo de memoria y mejorando la legibilidad.
+   * @details Clases disponibles:
+      - MentorBitMQ135 -> Clase para utilizar el sensor MQ135 (Calidad del aire)
+      - MentorBitMQ2   -> Clase para utilizar el sensor MQ2 (Gases combustibles)
+      - MentorBitMQ3   -> Clase para utilizar el sensor MQ3 (Alcohol)
+      - MentorBitMQ4   -> Clase para utilizar el sensor MQ4 (Metano / Gas Natural)
+      - MentorBitMQ5   -> Clase para utilizar el sensor MQ5 (GLP / Gas Natural)
+      - MentorBitMQ6   -> Clase para utilizar el sensor MQ6 (GLP / Butano)
+      - MentorBitMQ7   -> Clase para utilizar el sensor MQ7 (Monóxido de Carbono)
+      - MentorBitMQ8   -> Clase para utilizar el sensor MQ8 (Hidrógeno)
+      - MentorBitMQ9   -> Clase para utilizar el sensor MQ9 (CO y Gases Combustibles)
+   * Métodos principales (Heredados de MentorBitMQBase):
+      - MentorBitMQx        -> Constructor de la subclase correspondiente.
+      - obtenerLectura      -> Devuelve la concentración del gas estimado en ppm.
+      - cambiarDeteccionGas -> Ajusta los parámetros (A y B) según el gas objetivo seleccionado.
+      - calibrar            -> Calcula el valor R0 asumiendo que el sensor está en aire limpio.
+   * @note Atributos de Gas (enum):
+      Cada subclase contiene su propio enumerador `Gas` con las etiquetas válidas 
+      (ej. CO, CO2, ALCOHOL, CH4, GLP, etc.) para facilitar la programación al usuario.
+
 */
 
 #ifndef MentorBitMQ_h
 #define MentorBitMQ_h
 
-#include <arduino.h>
+#include <Arduino.h>
 #include <MentorPort.h>
-#include <MQUnifiedsensor.h>
 
-/***********************************  Sensor MQ135  ***********************************/
+/******************
+ * CLASE PADRE    *
+ *****************/
+
+class MentorBitMQBase : public MentorPot {
+
+    public:
+
+        void configPort(const Port& port) override;
+        void calibrar();
+        float obtenerLectura() const;
+
+    protected:
+
+        MentorBitMQBase(uint8_t mq_pin, float rl, float clean_air_ratio);
+
+        Port _port;
+
+        float _a;
+        float _b;
+        float _r0;
+        float _rl;
+        float _clean_air_ratio;
+
+        float _calcularRs() const;
+
+};
+
+/******************
+ * CLASES HIJA    *
+ *****************/
 
 class MentorBitMQ135 : public MentorPort
 {
 
     public:
 
+        enum Gas { CO, ALCOHOL, CO2, TOLUENO, NH4, ACETONA };
+
         MentorBitMQ135(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t co = 0;
-        const uint8_t alcohol = 1;
-        const uint8_t co2 = 2;
-        const uint8_t tolueno = 3;
-        const uint8_t nh4 = 4;
-        const uint8_t acetona = 5;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -101,26 +104,10 @@ class MentorBitMQ2 : public MentorPort
 
     public:
 
+        enum Gas { H2, GLP, CO, ALCOHOL, PROPANO };
+
         MentorBitMQ2(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t h2 = 0;
-        const uint8_t glp = 1;
-        const uint8_t co = 2;
-        const uint8_t alcohol = 3;
-        const uint8_t propano = 4;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -131,27 +118,10 @@ class MentorBitMQ3 : public MentorPort
 
     public:
 
+        enum Gas { GLP, CH4, CO, ALCOHOL, BENCENO, HEXANO };
+
         MentorBitMQ3(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t glp = 0;
-        const uint8_t ch4 = 1;
-        const uint8_t co = 2;
-        const uint8_t alcohol = 3;
-        const uint8_t benceno = 4;
-        const uint8_t hexano = 5;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -162,26 +132,10 @@ class MentorBitMQ4 : public MentorPort
 
     public:
 
+        enum Gas { GLP, CH4, CO, ALCOHOL, HUMO };
+
         MentorBitMQ4(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t glp = 0;
-        const uint8_t ch4 = 1;
-        const uint8_t co = 2;
-        const uint8_t alcohol = 3;
-        const uint8_t humo = 4;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -192,26 +146,10 @@ class MentorBitMQ5 : public MentorPort
 
     public:
 
+        enum Gas { H2, GLP, CH4, CO, ALCOHOL };
+
         MentorBitMQ5(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t h2 = 0;
-        const uint8_t glp = 1;
-        const uint8_t ch4 = 2;
-        const uint8_t co = 3;
-        const uint8_t alcohol = 4;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -222,26 +160,10 @@ class MentorBitMQ6 : public MentorPort
 
     public:
 
+        enum Gas { H2, GLP, CH4, CO, ALCOHOL };
+
         MentorBitMQ6(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t h2 = 0;
-        const uint8_t glp = 1;
-        const uint8_t ch4 = 2;
-        const uint8_t co = 3;
-        const uint8_t alcohol = 4;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -252,26 +174,10 @@ class MentorBitMQ7 : public MentorPort
 
     public:
 
+        enum Gas { H2, GLP, CH4, CO, ALCOHOL };
+
         MentorBitMQ7(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t h2 = 0;
-        const uint8_t glp = 1;
-        const uint8_t ch4 = 2;
-        const uint8_t co = 3;
-        const uint8_t alcohol = 4;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -282,26 +188,10 @@ class MentorBitMQ8 : public MentorPort
 
     public:
 
+        enum Gas { H2, GLP, CH4, CO, ALCOHOL };
+
         MentorBitMQ8(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t h2 = 0;
-        const uint8_t glp = 1;
-        const uint8_t ch4 = 2;
-        const uint8_t co = 3;
-        const uint8_t alcohol = 4;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
@@ -312,24 +202,10 @@ class MentorBitMQ9 : public MentorPort
 
     public:
 
+        enum Gas { GLP, CH4, CO };
+
         MentorBitMQ9(uint8_t gas_detection, uint8_t mq_pin = 0);
-        float obtenerLecturaMQ();
-        void cambiarDeteccionGas(uint8_t gas_detection);
-        void calibrar();
-        void configPort(const Port& port) override;
-
-        const uint8_t glp = 0;
-        const uint8_t ch4 = 1;
-        const uint8_t co = 2;
-
-    private:
-
-        void setParameters(uint8_t gas_detection);
-
-        Port _port;
-        uint8_t _gas_detection;
-
-        MQUnifiedsensor MQ;
+        void cambiarDeteccionGas(Gas gas_detection);
 
 };
 
